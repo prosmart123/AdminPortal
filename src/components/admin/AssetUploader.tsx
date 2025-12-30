@@ -235,42 +235,87 @@ export const AssetUploader = ({ assets, onChange, maxAssets = 20, productName = 
 
       {/* Thumbnail Grid */}
       {assets.length > 1 && (
-        <div className="grid grid-cols-4 md:grid-cols-6 gap-2">
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
           {assets.map((asset, index) => {
             const isImg = asset.type === 'image' || (!asset.type && asset.url && !asset.url.match(/\.(mp4|avi|mov|wmv)$/i));
             return (
-              <button
-                key={index}
-                type="button"
-                onClick={() => setCurrentIndex(index)}
-                className={cn(
-                  'relative aspect-square rounded-lg overflow-hidden border-2 transition-all',
-                  currentIndex === index
-                    ? 'border-teal-500 ring-2 ring-teal-200'
-                    : 'border-slate-200 hover:border-slate-300'
-                )}
-              >
-                {isImg && asset.url ? (
-                  <img
-                    src={asset.url}
-                    alt={`Thumbnail ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                ) : asset.url ? (
-                  <div className="w-full h-full bg-slate-800 flex items-center justify-center">
-                    <Video className="w-6 h-6 text-white" />
+              <div key={index} className="flex flex-col gap-2">
+                {/* Thumbnail with number badge */}
+                <button
+                  type="button"
+                  onClick={() => setCurrentIndex(index)}
+                  className={cn(
+                    'relative aspect-square rounded-lg overflow-hidden border-2 transition-all',
+                    currentIndex === index
+                      ? 'border-teal-500 ring-2 ring-teal-200'
+                      : 'border-slate-200 hover:border-slate-300'
+                  )}
+                >
+                  {/* Number Badge */}
+                  <div className="absolute top-2 left-2 z-10 w-6 h-6 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center border border-slate-200">
+                    <span className="text-xs font-bold text-slate-700">{index + 1}</span>
                   </div>
-                ) : (
-                  <div className="w-full h-full bg-slate-200 flex items-center justify-center">
-                    <Upload className="w-4 h-4 text-slate-400" />
-                  </div>
-                )}
-                {currentIndex === index && (
-                  <div className="absolute inset-0 bg-teal-500/20 flex items-center justify-center">
-                    <div className="w-3 h-3 bg-teal-500 rounded-full" />
-                  </div>
-                )}
-              </button>
+
+                  {isImg && asset.url ? (
+                    <img
+                      src={asset.url}
+                      alt={`Thumbnail ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : asset.url ? (
+                    <div className="w-full h-full bg-slate-800 flex items-center justify-center">
+                      <Video className="w-6 h-6 text-white" />
+                    </div>
+                  ) : (
+                    <div className="w-full h-full bg-slate-200 flex items-center justify-center">
+                      <Upload className="w-4 h-4 text-slate-400" />
+                    </div>
+                  )}
+                  {currentIndex === index && (
+                    <div className="absolute inset-0 bg-teal-500/20 flex items-center justify-center">
+                      <div className="w-3 h-3 bg-teal-500 rounded-full" />
+                    </div>
+                  )}
+                </button>
+
+                {/* Reorder Arrows */}
+                <div className="flex items-center justify-center gap-2">
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      moveAsset(index, index - 1);
+                    }}
+                    disabled={index === 0}
+                    className={cn(
+                      'p-1.5 rounded-lg border transition-all',
+                      index === 0
+                        ? 'border-slate-200 text-slate-300 cursor-not-allowed bg-slate-50'
+                        : 'border-slate-300 text-slate-600 hover:bg-teal-50 hover:border-teal-500 hover:text-teal-600'
+                    )}
+                    title="Move left"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      moveAsset(index, index + 1);
+                    }}
+                    disabled={index === assets.length - 1}
+                    className={cn(
+                      'p-1.5 rounded-lg border transition-all',
+                      index === assets.length - 1
+                        ? 'border-slate-200 text-slate-300 cursor-not-allowed bg-slate-50'
+                        : 'border-slate-300 text-slate-600 hover:bg-teal-50 hover:border-teal-500 hover:text-teal-600'
+                    )}
+                    title="Move right"
+                  >
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
             );
           })}
         </div>
