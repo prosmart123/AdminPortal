@@ -904,7 +904,7 @@ export default function ProductListPage() {
             {/* Filters and View Toggle */}
             <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center mb-4 overflow-visible">
               {/* Filters Section */}
-              <div className="flex flex-col sm:flex-row flex-1 gap-3">
+              <div className="flex flex-col sm:flex-row flex-1 gap-3 w-full sm:w-auto">
                 <Select
                   value={categoryFilter}
                   onValueChange={handleCategoryChange}
@@ -923,10 +923,10 @@ export default function ProductListPage() {
                 />
               </div>
 
-              {/* View Toggle Buttons */}
-              <div className="flex gap-2 flex-shrink-0 overflow-visible">
+              {/* Sort Button - Right aligned on mobile and desktop */}
+              <div className="flex gap-2 flex-shrink-0 self-end sm:self-auto">
                 {/* Sort Button with Dropdown */}
-                <div ref={sortDropdownRef} className="relative overflow-visible">
+                <div ref={sortDropdownRef} className="relative">
                   <button
                     onClick={(e) => {
                       setShowSortDropdown(!showSortDropdown);
@@ -936,14 +936,9 @@ export default function ProductListPage() {
                   >
                     <ArrowUpDown className="w-5 h-5" />
                   </button>
-                  {showSortDropdown && sortDropdownRef.current && (
+                  {showSortDropdown && (
                     <div 
-                      style={{
-                        position: 'fixed',
-                        top: `${sortDropdownRef.current.getBoundingClientRect().bottom + 8}px`,
-                        right: `${window.innerWidth - sortDropdownRef.current.getBoundingClientRect().right}px`,
-                      }}
-                      className="z-50 w-56 bg-white border-2 border-slate-300 rounded-xl shadow-xl p-2"
+                      className="absolute z-50 right-0 mt-2 w-56 bg-white border-2 border-slate-300 rounded-xl shadow-xl p-2"
                     >
                       <button
                         onClick={() => {
@@ -986,6 +981,7 @@ export default function ProductListPage() {
                 </div>
 
               </div>
+
             </div>
 
             {/* Products Grid - Mobile Cards */}
@@ -1321,9 +1317,9 @@ export default function ProductListPage() {
                   </button>
                 </div>
 
-                {/* Search Bar - Only show on Products tab */}
+                {/* Search Bar - Only show on Products tab and hidden on mobile */}
                 {hydraliteSubTab === 'products' && (
-                  <div className="relative w-80 mb-0.5">
+                  <div className="relative w-80 mb-0.5 hidden sm:block">
                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
                     <input
                       placeholder="Search products..."
@@ -1340,11 +1336,11 @@ export default function ProductListPage() {
             {hydraliteSubTab === 'products' && (
               <>
                 {/* Filters and View Toggle */}
-                <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-end mb-4 overflow-visible">
-                  {/* View Toggle Buttons */}
-                  <div className="flex gap-2 flex-shrink-0 overflow-visible">
+                <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-end mb-4">
+                  {/* Sort Button - Right aligned on mobile and desktop */}
+                  <div className="flex gap-2 flex-shrink-0">
                     {/* Sort Button with Dropdown */}
-                    <div ref={hydraliteSortDropdownRef} className="relative hydralite-sort-dropdown overflow-visible">
+                    <div ref={hydraliteSortDropdownRef} className="relative hydralite-sort-dropdown">
                       <button
                         onClick={() => setShowHydraliteSortDropdown(!showHydraliteSortDropdown)}
                         className="h-10 px-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2 bg-white text-slate-600 border-2 border-slate-200 hover:bg-slate-50 hover:border-slate-300"
@@ -1352,14 +1348,9 @@ export default function ProductListPage() {
                       >
                         <ArrowUpDown className="w-5 h-5" />
                       </button>
-                      {showHydraliteSortDropdown && hydraliteSortDropdownRef.current && (
+                      {showHydraliteSortDropdown && (
                         <div 
-                          style={{
-                            position: 'fixed',
-                            top: `${hydraliteSortDropdownRef.current.getBoundingClientRect().bottom + 8}px`,
-                            right: `${window.innerWidth - hydraliteSortDropdownRef.current.getBoundingClientRect().right}px`,
-                          }}
-                          className="z-50 w-56 bg-white border-2 border-slate-300 rounded-xl shadow-xl p-2"
+                          className="absolute z-50 right-0 mt-2 w-56 bg-white border-2 border-slate-300 rounded-xl shadow-xl p-2"
                         >
                           <button
                             onClick={() => {

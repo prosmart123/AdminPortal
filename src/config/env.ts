@@ -1,17 +1,17 @@
-// Hardcoded configuration
+// Environment-based configuration
 export const config = {
   mongodb: {
-    uri: "mongodb+srv://prosmart:prosmart@cluster0.jokss9k.mongodb.net/?appName=Cluster0",
+    uri: process.env.MONGODB_URI || "",
     databases: {
-      prosmart: "prosmart_db",
-      hydralite: "hydralite"
+      prosmart: process.env.MONGODB_DB_PROSMART || "prosmart_db",
+      hydralite: process.env.MONGODB_DB_HYDRALITE || "hydralite"
     },
     // Default database for backward compatibility
-    db: "prosmart_db"
+    db: process.env.MONGODB_DB || "prosmart_db"
   },
   cloudinary: {
-    cloudName: "dstmt1w5p",
-    apiKey: "747859347794899",
-    apiSecret: "O04mjGTySv_xuuXHWQ6hR6uuHcM"
+    cloudName: process.env.CLOUDINARY_CLOUD_NAME || "",
+    apiKey: process.env.CLOUDINARY_API_KEY || "",
+    apiSecret: process.env.CLOUDINARY_API_SECRET || ""
   }
 };

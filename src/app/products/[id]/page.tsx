@@ -164,13 +164,13 @@ export default function ProductEditPage() {
     if (formData.category_id !== originalFormData.category_id) return true;
     if (formData.subcategory_id !== originalFormData.subcategory_id) return true;
     if (formData.status !== originalFormData.status) return true;
-    
+
     // Check if images array has changed
     if (formData.images.length !== originalFormData.images.length) return true;
     for (let i = 0; i < formData.images.length; i++) {
       if (formData.images[i] !== originalFormData.images[i]) return true;
     }
-    
+
     return false;
   };
 
@@ -337,7 +337,7 @@ export default function ProductEditPage() {
                 <h2 className="text-lg font-bold text-slate-800 truncate">{product.product_name}</h2>
               </div>
             </div>
-            
+
             {/* Desktop Buttons */}
             <div className="hidden sm:flex gap-3 flex-shrink-0">
               <button

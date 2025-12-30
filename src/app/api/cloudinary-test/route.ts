@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { v2 as cloudinary } from 'cloudinary';
 
-// Cloudinary configuration
+// Cloudinary configuration from environment variables
 const DEST_CREDS = {
-    "cloud_name": "dstmt1w5p",
-    "api_key": "747859347794899",
-    "api_secret": "O04mjGTySv_xuuXHWQ6hR6uuHcM",
+    "cloud_name": process.env.CLOUDINARY_CLOUD_NAME || "",
+    "api_key": process.env.CLOUDINARY_API_KEY || "",
+    "api_secret": process.env.CLOUDINARY_API_SECRET || "",
 };
 
 cloudinary.config({
