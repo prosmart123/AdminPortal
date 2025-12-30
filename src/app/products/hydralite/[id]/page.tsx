@@ -358,11 +358,11 @@ export default function HydraliteProductEditPage() {
                   <label className="block text-sm font-semibold text-slate-700">
                     Category
                   </label>
-                  <Select
+                  <input
+                    placeholder="Enter category"
                     value={formData.category}
-                    onValueChange={(v) => handleChange('category', v)}
-                    options={categoryOptions}
-                    placeholder="Select category"
+                    onChange={(e) => handleChange('category', e.target.value)}
+                    className="w-full h-11 px-4 rounded-xl border-2 border-slate-200 bg-white text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-teal-500 transition-all"
                   />
                 </div>
 

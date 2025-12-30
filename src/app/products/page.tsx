@@ -69,6 +69,7 @@ export default function ProductListPage() {
   );
   const exportDropdownRef = useRef<HTMLDivElement>(null);
   const sortDropdownRef = useRef<HTMLDivElement>(null);
+  const hydraliteSortDropdownRef = useRef<HTMLDivElement>(null);
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [filterSubcategories, setFilterSubcategories] = useState<Subcategory[]>([]);
@@ -901,7 +902,7 @@ export default function ProductListPage() {
             </div>
 
             {/* Filters and View Toggle */}
-            <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center mb-4">
+            <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center mb-4 overflow-visible">
               {/* Filters Section */}
               <div className="flex flex-col sm:flex-row flex-1 gap-3">
                 <Select
@@ -923,18 +924,27 @@ export default function ProductListPage() {
               </div>
 
               {/* View Toggle Buttons */}
-              <div className="flex gap-2 flex-shrink-0">
+              <div className="flex gap-2 flex-shrink-0 overflow-visible">
                 {/* Sort Button with Dropdown */}
-                <div ref={sortDropdownRef} className="relative">
+                <div ref={sortDropdownRef} className="relative overflow-visible">
                   <button
-                    onClick={() => setShowSortDropdown(!showSortDropdown)}
+                    onClick={(e) => {
+                      setShowSortDropdown(!showSortDropdown);
+                    }}
                     className="h-10 px-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2 bg-white text-slate-600 border-2 border-slate-200 hover:bg-slate-50 hover:border-slate-300"
                     title="Sort Products"
                   >
                     <ArrowUpDown className="w-5 h-5" />
                   </button>
-                  {showSortDropdown && (
-                    <div className="absolute z-20 mt-2 right-0 w-56 bg-white border-2 border-slate-300 rounded-xl shadow-xl p-2">
+                  {showSortDropdown && sortDropdownRef.current && (
+                    <div 
+                      style={{
+                        position: 'fixed',
+                        top: `${sortDropdownRef.current.getBoundingClientRect().bottom + 8}px`,
+                        right: `${window.innerWidth - sortDropdownRef.current.getBoundingClientRect().right}px`,
+                      }}
+                      className="z-50 w-56 bg-white border-2 border-slate-300 rounded-xl shadow-xl p-2"
+                    >
                       <button
                         onClick={() => {
                           setSortType('name-length');
@@ -1330,11 +1340,11 @@ export default function ProductListPage() {
             {hydraliteSubTab === 'products' && (
               <>
                 {/* Filters and View Toggle */}
-                <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-end mb-4">
+                <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-end mb-4 overflow-visible">
                   {/* View Toggle Buttons */}
-                  <div className="flex gap-2 flex-shrink-0">
+                  <div className="flex gap-2 flex-shrink-0 overflow-visible">
                     {/* Sort Button with Dropdown */}
-                    <div className="relative hydralite-sort-dropdown">
+                    <div ref={hydraliteSortDropdownRef} className="relative hydralite-sort-dropdown overflow-visible">
                       <button
                         onClick={() => setShowHydraliteSortDropdown(!showHydraliteSortDropdown)}
                         className="h-10 px-3 rounded-lg font-medium transition-all flex items-center justify-center gap-2 bg-white text-slate-600 border-2 border-slate-200 hover:bg-slate-50 hover:border-slate-300"
@@ -1342,8 +1352,15 @@ export default function ProductListPage() {
                       >
                         <ArrowUpDown className="w-5 h-5" />
                       </button>
-                      {showHydraliteSortDropdown && (
-                        <div className="absolute z-20 mt-2 right-0 w-56 bg-white border-2 border-slate-300 rounded-xl shadow-xl p-2">
+                      {showHydraliteSortDropdown && hydraliteSortDropdownRef.current && (
+                        <div 
+                          style={{
+                            position: 'fixed',
+                            top: `${hydraliteSortDropdownRef.current.getBoundingClientRect().bottom + 8}px`,
+                            right: `${window.innerWidth - hydraliteSortDropdownRef.current.getBoundingClientRect().right}px`,
+                          }}
+                          className="z-50 w-56 bg-white border-2 border-slate-300 rounded-xl shadow-xl p-2"
+                        >
                           <button
                             onClick={() => {
                               setHydraliteSortType('name-length');
