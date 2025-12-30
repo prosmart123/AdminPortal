@@ -3,6 +3,7 @@ import { config } from '@/config/env';
 
 let client: MongoClient;
 let db: Db;
+let hydraliteDb: Db;
 let connectPromise: Promise<{ client: MongoClient; db: Db }> | null = null;
 
 export async function connectToDatabase() {
@@ -36,9 +37,10 @@ export async function connectToDatabase() {
 
       client = new MongoClient(config.mongodb.uri, clientOptions);
       await client.connect();
-      db = client.db(config.mongodb.db);
+      db = client.db(config.mongodb.databases.prosmart);
+      hydraliteDb = client.db(config.mongodb.databases.hydralite);
       
-      console.log('✅ Connected to MongoDB');
+      console.log('✅ Connected to MongoDB (prosmart_db & hydralite)');
 
       // Ensure indexes exist (async, don't wait for it)
       try {
@@ -65,4 +67,11 @@ export async function getDatabase() {
     await connectToDatabase();
   }
   return db;
+}
+
+export async function getHydraliteDatabase() {
+  if (!hydraliteDb) {
+    await connectToDatabase();
+  }
+  return hydraliteDb;
 }

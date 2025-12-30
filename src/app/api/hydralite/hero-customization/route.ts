@@ -1,28 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient, ObjectId } from 'mongodb';
-
-// MongoDB configuration
-const username = encodeURIComponent("kunal");
-const password = encodeURIComponent("kunal");
-const mongo_uri = `mongodb+srv://${username}:${password}@cluster0.9k8qle5.mongodb.net/?appName=Cluster0`;
-
-let client: MongoClient | null = null;
-
-async function getDatabase() {
-    if (!client) {
-        client = new MongoClient(mongo_uri);
-        await client.connect();
-    }
-    return client.db('prosmart_db');
-}
-
-async function getHydraliteDatabase() {
-    if (!client) {
-        client = new MongoClient(mongo_uri);
-        await client.connect();
-    }
-    return client.db('hydralite');
-}
+import { ObjectId } from 'mongodb';
+import { getDatabase, getHydraliteDatabase } from '@/lib/mongodb';
 
 export async function GET(request: NextRequest) {
     try {

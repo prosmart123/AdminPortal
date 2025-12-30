@@ -1,35 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { config } from '@/config/env';
-import { MongoClient, ObjectId } from 'mongodb';
+import { getHydraliteDatabase } from '@/lib/mongodb';
 import { v2 as cloudinary } from 'cloudinary';
 
-// MongoDB configuration
-const username = encodeURIComponent("kunal");
-const password = encodeURIComponent("kunal");
-const mongo_uri = `mongodb+srv://${username}:${password}@cluster0.9k8qle5.mongodb.net/?appName=Cluster0`;
-
 // Cloudinary configuration
-const DEST_CREDS = {
-  "cloud_name": "dstmt1w5p",
-  "api_key": "747859347794899",
-  "api_secret": "O04mjGTySv_xuuXHWQ6hR6uuHcM",
-};
-
 cloudinary.config({
-  cloud_name: DEST_CREDS.cloud_name,
-  api_key: DEST_CREDS.api_key,
-  api_secret: DEST_CREDS.api_secret,
+  cloud_name: config.cloudinary.cloudName,
+  api_key: config.cloudinary.apiKey,
+  api_secret: config.cloudinary.apiSecret,
 });
-
-let client: MongoClient | null = null;
-
-async function getHydraliteDatabase() {
-  if (!client) {
-    client = new MongoClient(mongo_uri);
-    await client.connect();
-  }
-  return client.db('hydralite');
-}
 
 export async function GET(request: NextRequest) {
   try {
@@ -171,7 +150,7 @@ export async function POST(request: NextRequest) {
           const folderPath = `hydralite/${finalProductId}/${safeName}`;
 
           console.log('🔧 Uploading to Cloudinary:', {
-            cloud_name: DEST_CREDS.cloud_name,
+            cloud_name: config.cloudinary.cloudName,
             folder: folderPath,
             resource_type: resourceType,
             file_name: file.name,

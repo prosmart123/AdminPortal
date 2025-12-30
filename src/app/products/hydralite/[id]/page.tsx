@@ -55,7 +55,6 @@ export default function HydraliteProductEditPage() {
     name: '',
     description: '',
     category: '',
-    subcategory: '',
     key_features: [] as KeyFeature[],
     assets: [] as AssetData[],
   });
@@ -65,7 +64,6 @@ export default function HydraliteProductEditPage() {
     name: '',
     description: '',
     category: '',
-    subcategory: '',
     key_features: [] as KeyFeature[],
     assets: [] as AssetData[],
   });
@@ -98,7 +96,6 @@ export default function HydraliteProductEditPage() {
             name: p.name || '',
             description: p.description || '',
             category: p.category || '',
-            subcategory: p.subcategory || '',
             key_features: p.key_features || [],
             assets: assetDataArray,
           };
@@ -167,9 +164,6 @@ export default function HydraliteProductEditPage() {
       formDataToSend.append('description', formData.description);
       if (formData.category) {
         formDataToSend.append('category', formData.category);
-      }
-      if (formData.subcategory) {
-        formDataToSend.append('subcategory', formData.subcategory);
       }
       if (formData.key_features.length > 0) {
         formDataToSend.append('key_features', JSON.stringify(formData.key_features));
@@ -360,30 +354,16 @@ export default function HydraliteProductEditPage() {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div className="space-y-2">
-                    <label className="block text-sm font-semibold text-slate-700">
-                      Category
-                    </label>
-                    <Select
-                      value={formData.category}
-                      onValueChange={(v) => handleChange('category', v)}
-                      options={categoryOptions}
-                      placeholder="Select category"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="block text-sm font-semibold text-slate-700">
-                      Subcategory
-                    </label>
-                    <input
-                      placeholder="Enter subcategory"
-                      value={formData.subcategory}
-                      onChange={(e) => handleChange('subcategory', e.target.value)}
-                      className="w-full h-11 px-4 rounded-xl border-2 border-slate-200 bg-white text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-teal-500 transition-all"
-                    />
-                  </div>
+                <div className="space-y-2">
+                  <label className="block text-sm font-semibold text-slate-700">
+                    Category
+                  </label>
+                  <Select
+                    value={formData.category}
+                    onValueChange={(v) => handleChange('category', v)}
+                    options={categoryOptions}
+                    placeholder="Select category"
+                  />
                 </div>
 
                 <div className="space-y-2">

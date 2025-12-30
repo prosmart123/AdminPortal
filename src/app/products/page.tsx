@@ -580,43 +580,51 @@ export default function ProductListPage() {
 
 
   const sortedProducts = [...products].sort((a, b) => {
+    // Handle undefined/null product names
+    const nameA = a.product_name || '';
+    const nameB = b.product_name || '';
+
     if (sortType === 'date-desc') {
       const dateB = new Date(b.updated_at || b.created_at || 0).getTime();
       const dateA = new Date(a.updated_at || a.created_at || 0).getTime();
       const diff = dateB - dateA;
       if (!Number.isNaN(diff) && diff !== 0) return diff;
       // Fallback alphabetical if dates missing or equal
-      return a.product_name.toLowerCase().localeCompare(b.product_name.toLowerCase());
+      return nameA.toLowerCase().localeCompare(nameB.toLowerCase());
     }
 
     if (sortType === 'name-length') {
       // Sort by product name length (longer names first)
-      const lengthDiff = b.product_name.length - a.product_name.length;
+      const lengthDiff = nameB.length - nameA.length;
       if (lengthDiff !== 0) return lengthDiff;
       // If lengths are same, sort alphabetically
-      return a.product_name.toLowerCase().localeCompare(b.product_name.toLowerCase());
+      return nameA.toLowerCase().localeCompare(nameB.toLowerCase());
     }
 
     // Alphabetical sorting A-Z
-    return a.product_name.toLowerCase().localeCompare(b.product_name.toLowerCase());
+    return nameA.toLowerCase().localeCompare(nameB.toLowerCase());
   });
 
   const sortedHydraliteProducts = [...hydraliteProducts].sort((a, b) => {
+    // Handle undefined/null names
+    const nameA = a.name || '';
+    const nameB = b.name || '';
+
     if (hydraliteSortType === 'date-desc') {
       const dateB = new Date(b.updated_at || b.created_at || 0).getTime();
       const dateA = new Date(a.updated_at || a.created_at || 0).getTime();
       const diff = dateB - dateA;
       if (!Number.isNaN(diff) && diff !== 0) return diff;
-      return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+      return nameA.toLowerCase().localeCompare(nameB.toLowerCase());
     }
 
     if (hydraliteSortType === 'name-length') {
-      const lengthDiff = b.name.length - a.name.length;
+      const lengthDiff = nameB.length - nameA.length;
       if (lengthDiff !== 0) return lengthDiff;
-      return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+      return nameA.toLowerCase().localeCompare(nameB.toLowerCase());
     }
 
-    return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+    return nameA.toLowerCase().localeCompare(nameB.toLowerCase());
   });
 
   const getHydraliteImageUrl = (product: HydraliteProduct) => {
@@ -926,27 +934,27 @@ export default function ProductListPage() {
                     <ArrowUpDown className="w-5 h-5" />
                   </button>
                   {showSortDropdown && (
-                    <div className="absolute z-20 mt-2 left-0 w-48 bg-white border-2 border-slate-200 rounded-lg shadow-lg p-2">
+                    <div className="absolute z-20 mt-2 right-0 w-56 bg-white border-2 border-slate-300 rounded-xl shadow-xl p-2">
                       <button
                         onClick={() => {
                           setSortType('name-length');
                           setShowSortDropdown(false);
                         }}
-                        className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${sortType === 'name-length'
-                          ? 'bg-teal-50 text-teal-600'
-                          : 'text-slate-700 hover:bg-slate-50'
+                        className={`w-full text-left px-4 py-3 rounded-lg text-sm font-semibold transition-all ${sortType === 'name-length'
+                          ? 'bg-teal-500 text-white'
+                          : 'text-slate-700 hover:bg-slate-100'
                           }`}
                       >
-                        product_name
+                        Product Name Length
                       </button>
                       <button
                         onClick={() => {
                           setSortType('alphabetical');
                           setShowSortDropdown(false);
                         }}
-                        className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${sortType === 'alphabetical'
-                          ? 'bg-teal-50 text-teal-600'
-                          : 'text-slate-700 hover:bg-slate-50'
+                        className={`w-full text-left px-4 py-3 rounded-lg text-sm font-semibold transition-all mt-1 ${sortType === 'alphabetical'
+                          ? 'bg-teal-500 text-white'
+                          : 'text-slate-700 hover:bg-slate-100'
                           }`}
                       >
                         A-Z
@@ -956,9 +964,9 @@ export default function ProductListPage() {
                           setSortType('date-desc');
                           setShowSortDropdown(false);
                         }}
-                        className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${sortType === 'date-desc'
-                          ? 'bg-teal-50 text-teal-600'
-                          : 'text-slate-700 hover:bg-slate-50'
+                        className={`w-full text-left px-4 py-3 rounded-lg text-sm font-semibold transition-all mt-1 ${sortType === 'date-desc'
+                          ? 'bg-teal-500 text-white'
+                          : 'text-slate-700 hover:bg-slate-100'
                           }`}
                       >
                         Date (Newest)
@@ -1322,18 +1330,7 @@ export default function ProductListPage() {
             {hydraliteSubTab === 'products' && (
               <>
                 {/* Filters and View Toggle */}
-                <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center mb-4">
-                  {/* Filters Section */}
-                  <div className="flex flex-col sm:flex-row flex-1 gap-3">
-                    <Select
-                      value={hydraliteCategoryFilter}
-                      onValueChange={setHydraliteCategoryFilter}
-                      options={hydraliteCategoryOptions}
-                      placeholder="Category"
-                      className="w-full sm:w-80"
-                    />
-                  </div>
-
+                <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-end mb-4">
                   {/* View Toggle Buttons */}
                   <div className="flex gap-2 flex-shrink-0">
                     {/* Sort Button with Dropdown */}
@@ -1346,27 +1343,27 @@ export default function ProductListPage() {
                         <ArrowUpDown className="w-5 h-5" />
                       </button>
                       {showHydraliteSortDropdown && (
-                        <div className="absolute z-20 mt-2 left-0 w-48 bg-white border-2 border-slate-200 rounded-lg shadow-lg p-2">
+                        <div className="absolute z-20 mt-2 right-0 w-56 bg-white border-2 border-slate-300 rounded-xl shadow-xl p-2">
                           <button
                             onClick={() => {
                               setHydraliteSortType('name-length');
                               setShowHydraliteSortDropdown(false);
                             }}
-                            className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${hydraliteSortType === 'name-length'
-                              ? 'bg-teal-50 text-teal-600'
-                              : 'text-slate-700 hover:bg-slate-50'
+                            className={`w-full text-left px-4 py-3 rounded-lg text-sm font-semibold transition-all ${hydraliteSortType === 'name-length'
+                              ? 'bg-teal-500 text-white'
+                              : 'text-slate-700 hover:bg-slate-100'
                               }`}
                           >
-                            name
+                            Product Name Length
                           </button>
                           <button
                             onClick={() => {
                               setHydraliteSortType('alphabetical');
                               setShowHydraliteSortDropdown(false);
                             }}
-                            className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${hydraliteSortType === 'alphabetical'
-                              ? 'bg-teal-50 text-teal-600'
-                              : 'text-slate-700 hover:bg-slate-50'
+                            className={`w-full text-left px-4 py-3 rounded-lg text-sm font-semibold transition-all mt-1 ${hydraliteSortType === 'alphabetical'
+                              ? 'bg-teal-500 text-white'
+                              : 'text-slate-700 hover:bg-slate-100'
                               }`}
                           >
                             A-Z
@@ -1376,9 +1373,9 @@ export default function ProductListPage() {
                               setHydraliteSortType('date-desc');
                               setShowHydraliteSortDropdown(false);
                             }}
-                            className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${hydraliteSortType === 'date-desc'
-                              ? 'bg-teal-50 text-teal-600'
-                              : 'text-slate-700 hover:bg-slate-50'
+                            className={`w-full text-left px-4 py-3 rounded-lg text-sm font-semibold transition-all mt-1 ${hydraliteSortType === 'date-desc'
+                              ? 'bg-teal-500 text-white'
+                              : 'text-slate-700 hover:bg-slate-100'
                               }`}
                           >
                             Date (Newest)

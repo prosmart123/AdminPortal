@@ -1,40 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient, ObjectId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import { v2 as cloudinary } from 'cloudinary';
-
-// MongoDB configuration
-const username = encodeURIComponent("kunal");
-const password = encodeURIComponent("kunal");
-const mongo_uri = `mongodb+srv://${username}:${password}@cluster0.9k8qle5.mongodb.net/?appName=Cluster0`;
+import { config } from '@/config/env';
+import { getHydraliteDatabase } from '@/lib/mongodb';
 
 // Cloudinary configuration
-const DEST_CREDS = {
-  "cloud_name": "dstmt1w5p",
-  "api_key": "747859347794899",
-  "api_secret": "O04mjGTySv_xuuXHWQ6hR6uuHcM",
-};
-
-const CLOUDINARY_CONFIG = {
-  cloud_name: (process.env.CLOUDINARY_CLOUD_NAME as string) || DEST_CREDS.cloud_name,
-  api_key: (process.env.CLOUDINARY_API_KEY as string) || DEST_CREDS.api_key,
-  api_secret: (process.env.CLOUDINARY_API_SECRET as string) || DEST_CREDS.api_secret,
-};
-
 cloudinary.config({
-  cloud_name: CLOUDINARY_CONFIG.cloud_name,
-  api_key: CLOUDINARY_CONFIG.api_key,
-  api_secret: CLOUDINARY_CONFIG.api_secret,
+  cloud_name: config.cloudinary.cloudName,
+  api_key: config.cloudinary.apiKey,
+  api_secret: config.cloudinary.apiSecret,
 });
-
-let client: MongoClient | null = null;
-
-async function getHydraliteDatabase() {
-  if (!client) {
-    client = new MongoClient(mongo_uri);
-    await client.connect();
-  }
-  return client.db('hydralite');
-}
 
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {

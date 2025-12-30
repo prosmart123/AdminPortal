@@ -2,6 +2,11 @@
 export const config = {
   mongodb: {
     uri: "mongodb+srv://prosmart:prosmart@cluster0.jokss9k.mongodb.net/?appName=Cluster0",
+    databases: {
+      prosmart: "prosmart_db",
+      hydralite: "hydralite"
+    },
+    // Default database for backward compatibility
     db: "prosmart_db"
   },
   cloudinary: {
