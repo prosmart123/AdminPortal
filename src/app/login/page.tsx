@@ -32,7 +32,7 @@ export default function LoginPage() {
       toast.success('Welcome back! You have successfully logged in.');
       router.push('/products');
     } else {
-      toast.error('Invalid username or password. Try admin/admin');
+      toast.error('Invalid Username or Password, Dont Try again later');
     }
     
     setIsLoading(false);
