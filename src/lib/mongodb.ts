@@ -40,7 +40,7 @@ export async function connectToDatabase() {
       db = client.db(config.mongodb.databases.prosmart);
       hydraliteDb = client.db(config.mongodb.databases.hydralite);
       
-      console.log('✅ Connected to MongoDB (prosmart_db & hydralite)');
+      console.log(' Connected to MongoDB (prosmart_db & hydralite)');
 
       // Ensure indexes exist (async, don't wait for it)
       try {

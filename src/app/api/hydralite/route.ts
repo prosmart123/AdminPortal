@@ -168,14 +168,14 @@ export async function POST(request: NextRequest) {
             overwrite: true,
           });
 
-          console.log('✅ Cloudinary upload success:', uploadResult.secure_url);
+          console.log(' Cloudinary upload success:', uploadResult.secure_url);
 
           if (uploadResult && uploadResult.secure_url) {
             assets.push({
               type: resourceType,
               path: uploadResult.secure_url
             });
-            console.log('✅ Asset added to array:', uploadResult.secure_url);
+            console.log(' Asset added to array:', uploadResult.secure_url);
           } else {
             // If upload didn't return a URL, treat it as a failure
             console.error('❌ Upload result invalid:', uploadResult);
@@ -199,7 +199,7 @@ export async function POST(request: NextRequest) {
       }
     }
 
-    console.log(`✅ All ${assets.length} assets uploaded successfully`);
+    console.log(` All ${assets.length} assets uploaded successfully`);
 
     // Only save to MongoDB if ALL uploads succeeded
     // Create product document with Cloudinary URLs only (no raw data)
@@ -223,7 +223,7 @@ export async function POST(request: NextRequest) {
 
     const result = await collection.insertOne(productData);
 
-    console.log(`✅ Product saved to MongoDB with ID: ${result.insertedId}`);
+    console.log(` Product saved to MongoDB with ID: ${result.insertedId}`);
 
     return NextResponse.json({
       success: true,

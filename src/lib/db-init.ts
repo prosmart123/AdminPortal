@@ -29,7 +29,7 @@ export async function ensureIndexes() {
     await subcategoriesCollection.createIndex({ subcategory_id: 1 });
     await subcategoriesCollection.createIndex({ category_id: 1, subcategory_id: 1 });
 
-    console.log('✅ Database indexes ensured');
+    console.log(' Database indexes ensured');
   } catch (error) {
     console.error('Error creating indexes:', error);
     // Don't throw - indexes not existing won't break the app, just slow it down

@@ -128,7 +128,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
             overwrite: true,
           });
 
-          console.log('✅ NEW asset uploaded:', uploadResult.secure_url);
+          console.log(' NEW asset uploaded:', uploadResult.secure_url);
 
           newlyUploadedAssets.push({
             type: resourceType,
@@ -147,7 +147,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       }
     }
 
-    console.log(`✅ Uploaded ${newlyUploadedAssets.length} new assets`);
+    console.log(` Uploaded ${newlyUploadedAssets.length} new assets`);
 
     // Now handle existing assets from metadata
     let existingAssets: Array<{ type: string; path: string }> = [];
@@ -218,7 +218,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       );
     }
 
-    console.log('✅ Product updated successfully');
+    console.log(' Product updated successfully');
 
     return NextResponse.json({
       success: true,
