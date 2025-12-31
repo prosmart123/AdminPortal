@@ -1333,9 +1333,12 @@ export default function ProductListPage() {
             {hydraliteSubTab === 'products' && (
               <>
                 {/* Filters and View Toggle */}
-                <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-end mb-4">
+                <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between mb-4">
+                  {/* Empty spacer for left side */}
+                  <div className="flex-1"></div>
+                  
                   {/* Sort Button - Right aligned on mobile and desktop */}
-                  <div className="flex gap-2 flex-shrink-0">
+                  <div className="flex gap-2 flex-shrink-0 ml-auto">
                     {/* Sort Button with Dropdown */}
                     <div ref={hydraliteSortDropdownRef} className="relative hydralite-sort-dropdown">
                       <button
