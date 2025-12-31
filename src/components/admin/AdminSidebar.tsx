@@ -72,7 +72,7 @@ export const AdminSidebar = ({ isOpen, onClose }: AdminSidebarProps) => {
       <aside
         className={cn(
           'fixed md:static inset-y-0 left-0 z-50',
-          'w-72 md:w-64 h-screen flex flex-col',
+          'w-full md:w-64 h-screen flex flex-col',
           'bg-white border-r border-slate-200 shadow-xl md:shadow-none',
           'transform transition-transform duration-300 ease-in-out',
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'

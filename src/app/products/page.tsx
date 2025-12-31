@@ -697,34 +697,31 @@ export default function ProductListPage() {
   // in the products/card areas while `isLoading` is true.
 
   return (
-    <AdminLayout title="Product List" showHeader={false}>
-      {/* Floating Tabbar at Header Location */}
-      <div className="sticky top-0 z-30 flex items-center justify-center py-2 bg-white">
-        {/* Floating Tabbar Container - Centered */}
-        <div className="flex items-center gap-1 bg-white p-1 rounded-lg border-2 border-slate-300 shadow-sm">
-          <button
-            onClick={() => handleTabChange('prosmart')}
-            className={`flex items-center justify-center px-4 py-2 rounded-md transition-all ${activeTab === 'prosmart'
-              ? 'bg-teal-50 border-2 border-teal-500 shadow-sm'
-              : 'bg-white border-2 border-transparent hover:bg-slate-50'
-              }`}
-            aria-label="ProSmart"
-            title="ProSmart"
-          >
-            <img src="/prosmart_logo_lg.png" alt="ProSmart" className="h-6 md:h-7 object-contain" />
-          </button>
-          <button
-            onClick={() => handleTabChange('hydralite')}
-            className={`flex items-center justify-center px-4 py-2 rounded-md transition-all ${activeTab === 'hydralite'
-              ? 'bg-teal-50 border-2 border-teal-500 shadow-sm'
-              : 'bg-white border-2 border-transparent hover:bg-slate-50'
-              }`}
-            aria-label="Hydralite"
-            title="Hydralite"
-          >
-            <img src="/hydralite_logo.png" alt="Hydralite" className="h-6 md:h-7 object-contain" />
-          </button>
-        </div>
+    <AdminLayout title="Product List">
+      {/* Floating Tabbar */}
+      <div className="flex items-center gap-1 bg-white p-1 rounded-lg border-2 border-slate-300 shadow-sm sticky top-0 z-30 mx-auto w-fit mb-4">
+        <button
+          onClick={() => handleTabChange('prosmart')}
+          className={`flex items-center justify-center px-3 py-1.5 rounded-md transition-all ${activeTab === 'prosmart'
+            ? 'bg-teal-50 border-2 border-teal-500 shadow-sm'
+            : 'bg-white border-2 border-transparent hover:bg-slate-50'
+            }`}
+          aria-label="ProSmart"
+          title="ProSmart"
+        >
+          <img src="/prosmart_logo_lg.png" alt="ProSmart" className="h-5 md:h-6 object-contain" />
+        </button>
+        <button
+          onClick={() => handleTabChange('hydralite')}
+          className={`flex items-center justify-center px-3 py-1.5 rounded-md transition-all ${activeTab === 'hydralite'
+            ? 'bg-teal-50 border-2 border-teal-500 shadow-sm'
+            : 'bg-white border-2 border-transparent hover:bg-slate-50'
+            }`}
+          aria-label="Hydralite"
+          title="Hydralite"
+        >
+          <img src="/hydralite_logo.png" alt="Hydralite" className="h-5 md:h-6 object-contain" />
+        </button>
       </div>
 
       {exportLoading && (
